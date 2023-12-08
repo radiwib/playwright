@@ -8,4 +8,5 @@ test('test', async ({ page }) => {
   await page.locator('[data-test="password"]').fill('secret_sauce');
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
+  await page.pause();
 });

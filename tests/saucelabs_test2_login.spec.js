@@ -19,29 +19,62 @@ test('verify main title', async ({page}) => {
 
 });
 
-test('checkout 1 item', async ({page}) => {
+test.describe('checkout', async () => {
+    test('checkout item', async ({page}) => {
 
-    await page.locator('#item_4_title_link').click();
-    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    await page.locator('[data-test="back-to-products"]').click();
-    await page.locator('[class="shopping_cart_link"]').click();
+        //add to cart by item page
+        await page.locator('#item_4_title_link').click();
+        await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+        await page.locator('[data-test="back-to-products"]').click();
+        
+        //add to cart by list page
+        await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
+        
+        //go to cart
+        await page.locator('[class="shopping_cart_link"]').click();
+
+        //assert that the item is successfully added to the cart
+        await expect(page.locator('#item_4_title_link')).toContainText('Sauce Labs Backpack');
+
+        //checkout items
+        await page.locator('[data-test="checkout"]').click();
+        await page.locator('[data-test="firstName"]').click();
+        await page.locator('[data-test="firstName"]').fill('mantab');
+        await page.locator('[data-test="lastName"]').click();
+        await page.locator('[data-test="lastName"]').fill('joss');
+        await page.locator('[data-test="postalCode"]').click();
+        await page.locator('[data-test="postalCode"]').fill('1234');
+        await page.locator('[data-test="continue"]').click();
+        
+        //assert that the item has successfully go to checkout
+        await expect(page.locator('#item_4_title_link')).toContainText('Sauce Labs Backpack');
+        await page.locator('[data-test="finish"]').click();
+        
+        //assert that the order has been successed
+        await expect(page.locator('[class="complete-header"]')).toContainText('Thank you for your order!');
+        await expect(page.locator('[class="complete-text"]')).toContainText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
     
-    //assert that the item is successfully added to the chart
-    await expect(page.locator('#item_4_title_link')).toContainText('Sauce Labs Backpack');
-    await page.locator('[data-test="checkout"]').click();
-    await page.locator('[data-test="firstName"]').click();
-    await page.locator('[data-test="firstName"]').fill('mantab');
-    await page.locator('[data-test="lastName"]').click();
-    await page.locator('[data-test="lastName"]').fill('joss');
-    await page.locator('[data-test="postalCode"]').click();
-    await page.locator('[data-test="postalCode"]').fill('1234');
-    await page.locator('[data-test="continue"]').click();
+    })
     
-    //assert that the item has successfully go to checkout
-    await expect(page.locator('#item_4_title_link')).toContainText('Sauce Labs Backpack');
-    await page.locator('[data-test="finish"]').click();
+    test('checkout item and cancel', async ({page}) => {
     
-    //assert that the order has been successed
-    await expect(page.getByRole('heading')).toContainText('Thank you for your order!');
+        //add to cart by item page
+        await page.locator('#item_4_title_link').click();
+        await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+        await page.locator('[data-test="back-to-products"]').click();
+        
+        //add to cart by list page
+        await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
+    
+        //go to cart
+        await page.locator('[class="shopping_cart_link"]').click();
+
+        //cancel items
+        await page.locator('[id="remove-sauce-labs-backpack"]').click();
+        await page.locator('[id="remove-sauce-labs-bike-light"]').click();
+
+        //assert that the items was successfully removed
+        await expect(page.locator('[class="removed_cart_item"]').toBeVisible());
+    })
 
 })

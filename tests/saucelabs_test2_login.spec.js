@@ -73,8 +73,13 @@ test.describe('checkout', async () => {
         await page.locator('[id="remove-sauce-labs-backpack"]').click();
         await page.locator('[id="remove-sauce-labs-bike-light"]').click();
 
+        //const locator = page.locator('#cart_contents_container');
+        //const locator = page.locator('[class="removed_cart_item"]');
+        const locator = page.locator('[class="shopping_cart_link"]');
         //assert that the items was successfully removed
-        await expect(page.locator('[class="removed_cart_item"]').toBeVisible());
+        //await expect(page.locator('[class="removed_cart_item"]').getAttribute('class').toContainText(''));
+        //await expect(locator).toHaveClass(/removed_cart_item/);
+        await expect(locator).toBeEmpty();
     })
 
 })

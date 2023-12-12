@@ -4,13 +4,13 @@ exports.loginPage = class loginPage {
     constructor(page) {
 
         this.page = page
-        this.username_Textbox = page.locator('[data-test="username"]');
-        this.password_Textbox = page.locator('[data-test="password"]');
-        this.login_Button = page.locator('[data-test="login-button"]');
+        this.username_Textbox = page.locator('[data-test="username"]')
+        this.password_Textbox = page.locator('[data-test="password"]')
+        this.login_Button = page.locator('[data-test="login-button"]')
 
     }
-async goto() {
-    await this.gotoLoginPage('https://www.saucedemo.com/');
+async gotoLoginPage() {
+    await this.page.goto('https://www.saucedemo.com/');
 }
 
 async loginMethod(username, password){

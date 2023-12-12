@@ -5,7 +5,7 @@ test('login', async ({page}) => {
 
     const login = new loginPage(page)
 
-    await login.go();
+    await login.gotoLoginPage();
     await login.loginMethod('standard_user', 'secret_sauce');
 
 })

@@ -12,7 +12,7 @@ test.beforeEach('login', async ({ page }) => {
 
 });
 
-test('verify main title', async ({page}) => {
+test('verify main title', async ({ page }) => {
 
     await expect(page.locator('#header_container')).toContainText('Product');
     await expect(page.locator('[class="app_logo"]')).toContainText('Swag Labs');
@@ -20,16 +20,16 @@ test('verify main title', async ({page}) => {
 });
 
 test.describe('checkout', async () => {
-    test('checkout item', async ({page}) => {
+    test('checkout item', async ({ page }) => {
 
         //add to cart by item page
         await page.locator('#item_4_title_link').click();
         await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
         await page.locator('[data-test="back-to-products"]').click();
-        
+
         //add to cart by list page
         await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
-        
+
         //go to cart
         await page.locator('[class="shopping_cart_link"]').click();
 
@@ -45,27 +45,27 @@ test.describe('checkout', async () => {
         await page.locator('[data-test="postalCode"]').click();
         await page.locator('[data-test="postalCode"]').fill('1234');
         await page.locator('[data-test="continue"]').click();
-        
+
         //assert that the item has successfully go to checkout
         await expect(page.locator('#item_4_title_link')).toContainText('Sauce Labs Backpack');
         await page.locator('[data-test="finish"]').click();
-        
+
         //assert that the order has been successed
         await expect(page.locator('[class="complete-header"]')).toContainText('Thank you for your order!');
         await expect(page.locator('[class="complete-text"]')).toContainText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
-    
+
     })
-    
-    test('checkout item and cancel', async ({page}) => {
-    
+
+    test('checkout item and cancel', async ({ page }) => {
+
         //add to cart by item page
         await page.locator('#item_4_title_link').click();
         await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
         await page.locator('[data-test="back-to-products"]').click();
-        
+
         //add to cart by list page
         await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
-    
+
         //go to cart
         await page.locator('[class="shopping_cart_link"]').click();
 
